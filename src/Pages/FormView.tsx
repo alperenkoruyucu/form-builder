@@ -6,26 +6,29 @@ import camelcase from 'camelcase'
 import Swal from 'sweetalert2'
 import useStore from '../store'
 
-const FormView = () => {
+const FormView= () => {
     
-    const { id } = useParams()
-    const [formInfo, setFormInfo] = useState([])
-    const [formLabels, setFormLabels] = useState([])
-    const [values, setValues] = useState({})
-    const store = useStore()
-    const { toggleUpdate } = store
+    const { id }: any = useParams()
+    const [formInfo, setFormInfo]: any = useState([])
+    const [formLabels, setFormLabels]: any = useState([])
+    const [values, setValues]: any = useState({})
+    const store: any = useStore()
+    const { toggleUpdate }: any = store
 
     useEffect(() => {
         GetFormDetails(id).then((res) => {
             setFormLabels(res.formDetails)
             setFormInfo(res)
             document.title = res.formName
-            document.getElementById('favicon').href = `${process.env.REACT_APP_API_URL}${res.icon}`
+            let link: any= document.getElementById(
+                'favicon'
+            ) as HTMLAnchorElement | null;
+            link.href = `${process.env.REACT_APP_API_URL}${res.icon}`
         })
     }, [])
 
-    const handleInputChange = (event) => {
-        const updatedValues = values
+    const handleInputChange = (event: any) => {
+        const updatedValues: any = values
         updatedValues[event.target.name] = event.target.value
         setValues(updatedValues)
     }
@@ -81,7 +84,7 @@ const FormView = () => {
                                 >
                                     <form encType="multipart/form-data">
                                         <div className="row">
-                                            {Object.entries(formLabels).map(([label, index]) => {
+                                            {Object.entries(formLabels).map(([label, index]: any) => {
                                                 return (
                                                     <div className="form-group col-md-6 col-sm-12 col-12 mt-4">
                                                         <label htmlFor="fullname">{label}</label>

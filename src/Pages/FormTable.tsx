@@ -143,10 +143,10 @@ const FormTable = () => {
             .then((res) => {
                 setFormDetails(res)
                 document.title = res.formName + ' Table'
-                let data: any= document.getElementById(
+                let link: any= document.getElementById(
                     'favicon'
                 ) as HTMLAnchorElement | null;
-                data.href = `${process.env.REACT_APP_API_URL}${res.icon}`
+                link.href = `${process.env.REACT_APP_API_URL}${res.icon}`
                 return res.formDetails
             })
             .then((details: any) => {
