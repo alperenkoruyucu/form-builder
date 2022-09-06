@@ -8,9 +8,8 @@ import { toast } from 'react-toastify' //, ToastContainer
 import 'react-toastify/dist/ReactToastify.css'
 import useStore from '../store'
 import { useTranslation } from 'react-i18next'
-import { AnyARecord } from 'dns'
 
-const UserEdit = (props: any) => {
+const UserEdit = (props) => {
     const titles = [
         'Software Engineer',
         'DevOps Engineer',
@@ -29,7 +28,7 @@ const UserEdit = (props: any) => {
     const toggleUpdate = store.toggleUpdate
     const [isLoading, setLoading] = useState(false)
 
-    const urlToObject = async (image: any) => {
+    const urlToObject = async (image) => {
         const response = await fetch(process.env.REACT_APP_API_URL + image)
         const blob = await response.blob()
         const file = new File([blob], 'image.jpg', { type: blob.type })
@@ -89,7 +88,7 @@ const UserEdit = (props: any) => {
                 .required('About is a required field'),
         }),
 
-        onSubmit: async (values: any) => {
+        onSubmit: async (values) => {
             setLoading(true)
 
             var form_data = new FormData()
@@ -121,7 +120,7 @@ const UserEdit = (props: any) => {
                 <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
                     <div className="row mt-4">
                         <div className="form-group col-md-6 col-sm-12">
-                            <label htmlFor="Surname">{t("Full Name")}</label>
+                            <label for="Surname">{t("Full Name")}</label>
                             <input
                                 type="text"
                                 className="form-control mt-2"
@@ -137,7 +136,7 @@ const UserEdit = (props: any) => {
                             ) : null}
                         </div>
                         <div className="form-group col-md-6 col-sm-12">
-                            <label htmlFor="email">Email</label>
+                            <label for="email">Email</label>
                             <input
                                 type="email"
                                 className="form-control mt-2"
@@ -155,7 +154,7 @@ const UserEdit = (props: any) => {
                     </div>
                     <div className="row mt-4">
                         <div className="form-group col-md-4 col-sm-12">
-                            <label className="mb-2" htmlFor="FirstJobDay">
+                            <label className="mb-2" for="FirstJobDay">
                                 {t("Orion Start Day")}
                             </label>
                             <div className="form-group">
@@ -174,17 +173,17 @@ const UserEdit = (props: any) => {
                             </div>
                         </div>
                         <div className="form-group col-md-4 col-sm-12">
-                            <label htmlFor="FirstJobDay">{t("Position")}</label>
+                            <label for="FirstJobDay">{t("Position")}</label>
                             <select
                                 onChange={formik.handleChange}
                                 name="workTitle"
-                                className="form-select mt-2"
+                                class="form-select mt-2"
                                 value={formik.values.workTitle}
                             >
-                                {titles.map((item: string, index: any) => {
+                                {titles.map((item, index) => {
                                     return (
                                         <option
-                                            {...(props.data.workTitle == item ? 'selected' : null) as {}}
+                                            {...(props.data.workTitle == item ? 'selected' : null)}
                                             value={item}
                                         >
                                             {item}
@@ -195,7 +194,7 @@ const UserEdit = (props: any) => {
                         </div>
                         <div className="form-group col-md-4 col-sm-12">
                             <div className="form-group">
-                                <label htmlFor="university">{t("Department")}</label>
+                                <label for="university">{t("Department")}</label>
                                 <input
                                     type="text"
                                     className="form-control mt-2"
@@ -215,7 +214,7 @@ const UserEdit = (props: any) => {
                     <div className="row mt-4">
                         <div className="form-group mt-2 col-md-2">
                             <div className="form-group">
-                                <label className="mb-3" htmlFor="file">
+                                <label className="mb-3" for="file">
                                     {t("Current Photo")}
                                 </label>
                                 <div className="currentPhoto">
@@ -228,7 +227,7 @@ const UserEdit = (props: any) => {
                         </div>
                         <div className="form-group mt-5 col-md-10">
                             <div className="form-group">
-                                <label className="mb-3" htmlFor="file">
+                                <label className="mb-3" for="file">
                                     {t("Click to update photo")}
                                 </label>
                                 <input
@@ -236,7 +235,7 @@ const UserEdit = (props: any) => {
                                     className="form-control"
                                     id="file"
                                     name="file"
-                                    onChange={(e: any) => {
+                                    onChange={(e) => {
                                         formik.setFieldValue('file', e.target.files[0])
                                     }}
                                 />
@@ -247,7 +246,7 @@ const UserEdit = (props: any) => {
                     <div className="row mt-4">
                         <div className="form-group mt-1 col-md-9 col-sm-12">
                             <div className="form-group">
-                                <label htmlFor="university">{t("University")}</label>
+                                <label for="university">{t("University")}</label>
                                 <input
                                     type="text"
                                     className="form-control mt-2"
@@ -264,7 +263,7 @@ const UserEdit = (props: any) => {
                             </div>
                         </div>
                         <div className="form-group mt-1 col-md-3 col-sm-12">
-                            <label className="mb-2" htmlFor="GraduationTime">
+                            <label className="mb-2" for="GraduationTime">
                                 {t("Graduation")}
                             </label>
                             <div className="form-group">
@@ -285,7 +284,7 @@ const UserEdit = (props: any) => {
                     </div>
                     <div className="row mt-4">
                         <div className="form-group mt-1 col-md-4 col-sm-12">
-                            <label htmlFor="PreviousJob">{t("Previous Job")}</label>
+                            <label for="PreviousJob">{t("Previous Job")}</label>
                             <input
                                 type="text"
                                 className="form-control mt-2"
@@ -301,7 +300,7 @@ const UserEdit = (props: any) => {
                             ) : null}
                         </div>
                         <div className="form-group mt-1 col-md-4 col-sm-12">
-                            <label htmlFor="PreviousJob">{t("Previous Position")}</label>
+                            <label for="PreviousJob">{t("Previous Position")}</label>
                             <input
                                 type="text"
                                 className="form-control mt-2"
@@ -314,7 +313,7 @@ const UserEdit = (props: any) => {
                         </div>
                         <div className="form-group mt-1 col-md-4 col-sm-12">
                             <div className="form-group">
-                                <label htmlFor="TotalWorkTime">{t("Total Experience")}</label>
+                                <label for="TotalWorkTime">{t("Total Experience")}</label>
                                 <input
                                     type="text"
                                     className="form-control mt-2"
@@ -330,7 +329,7 @@ const UserEdit = (props: any) => {
                     </div>
                     <div className="row mt-4">
                         <div className="form-group mt-1 col-md-12 col-sm-12">
-                            <label htmlFor="Skills">{t("Technical Skills")}</label>
+                            <label for="Skills">{t("Technical Skills")}</label>
                             <textarea
                                 className="form-control mt-2"
                                 id="Skills"
@@ -348,7 +347,7 @@ const UserEdit = (props: any) => {
                     </div>
                     <div className="row mt-4">
                         <div className="form-group mt-1 col-md-12 col-sm-12">
-                            <label htmlFor="Description">{t("About")}</label>
+                            <label for="Description">{t("About")}</label>
                             <textarea
                                 className="form-control mt-2"
                                 name="description"
@@ -363,15 +362,15 @@ const UserEdit = (props: any) => {
                             ) : null}
                         </div>
                     </div>
-                    <div style={{ textAlign: 'center' }} className="form-button mt-4">
+                    <div style={{ textAlign: 'center' }} class="form-button mt-4">
                         {!isLoading ? (
-                            <button id="submit" type="submit" className="btn btn-primary">
+                            <button id="submit" type="submit" class="btn btn-primary">
                                 {t("Update")}
                             </button>
                         ) : (
-                            <button id="submit" type="submit" className="btn btn-primary">
+                            <button id="submit" type="submit" class="btn btn-primary">
                                 <span
-                                    className="spinner-border spinner-border-sm"
+                                    class="spinner-border spinner-border-sm"
                                     role="status"
                                     aria-hidden="true"
                                 ></span>
