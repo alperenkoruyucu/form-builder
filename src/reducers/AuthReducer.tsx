@@ -10,7 +10,7 @@ const authState = {
 };
 
 
-const authreducer = (state = authState, action) => {
+const authreducer = (state = authState) => {
     return state;
 }
 

@@ -113,20 +113,7 @@ const UserCreate = () => {
                                     <div className="form-group col-md-3">
                                         <h3>{t("Welcome")}</h3>
                                         <p>{t("TELL US ABOUT YOURSELF")}</p>
-                                    </div>
-                                    {/* <div
-                                        style={{ textAlign: 'right' }}
-                                        className="form-group col-md-9"
-                                    >
-                                        <Link to="/users" className="btn btn-primary mx-2">
-                                            {t("Admin Panel")}
-                                        </Link>
-                                        <Link to="/dynamic/form-list" className="btn btn-primary mx-2">
-                                            {t("Form List")}
-                                        </Link>
-                                        
-                                        
-                                    </div> */}
+                                    </div>                                    
                                 </div>
                                 <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
                                     <div className="row mt-4">

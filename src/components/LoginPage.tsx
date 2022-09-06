@@ -22,7 +22,7 @@ const LoginPage = () => {
 
     const {t, i18n} = useTranslation()
     const dispatch = useDispatch();
-    const formik = useFormik({
+    const formik: any = useFormik({
         initialValues: {
             username: '',
             password: '',
@@ -33,8 +33,12 @@ const LoginPage = () => {
         }),
         onSubmit: (values) => {
             setLoading(true)
-            Login(values.username, values.password)
-                .then((res) => {
+            let data = {
+                username:values.username,
+                password:values.password
+            }
+            Login(data)
+                .then((res: any) => {
                     if (res.data.token) {
                         console.log('res.data',res.data)
                         setLoading(false)
@@ -72,7 +76,7 @@ const LoginPage = () => {
                                         <Link
                                             to="/"
                                             style={{ background: '#495056' }}
-                                            class="btn btn-primary"
+                                            className="btn btn-primary"
                                         >
                                             {t("Back")}
                                         </Link>

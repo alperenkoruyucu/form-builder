@@ -5,7 +5,7 @@ const initialState = {
     theme: 'light'
 };
 
-const uiReducer = (state = initialState, action) => {
+const uiReducer = (state = initialState, action: any) => {
     console.log('uireducer',action)
     switch (action.type){
         case types.UPDATE_LANG:
