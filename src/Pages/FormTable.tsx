@@ -15,21 +15,21 @@ import { GetUserDetails } from '../methods/GetUsers'
 import { useTranslation } from 'react-i18next'
 
 const FormTable = () => {
-    const { id } = useParams()
-    const [documents, setDocuments] = useState([])
-    const [formDetails, setFormDetails] = useState([])
-    const [columns, setColumns] = useState([])
-    const [isLoading, setLoading] = useState(true)
-    const [selectionModel, setSelectionModel] = useState([])
+    const { id }:any = useParams()
+    const [documents, setDocuments]:any = useState([])
+    const [formDetails, setFormDetails]:any = useState([])
+    const [columns, setColumns]:any = useState([])
+    const [isLoading, setLoading]: any = useState(true)
+    const [selectionModel, setSelectionModel]: any = useState([])
     const [isEditEnabled, setEditEnabled] = useState(false)
-    const [userDetail, setUserDetail] = useState()
+    const [userDetail, setUserDetail]: any = useState()
     const store = useStore()
     const { toggleUpdate } = store
     const { isUpdated } = store
     const {t, i18n} = useTranslation()
     const navigate = useNavigate()
 
-    const Toolbar = (props) => {
+    const Toolbar = (props: any) => {
         const handleClick = () => {
             Swal.fire({
                 title: 'Emin misin?',
@@ -65,7 +65,7 @@ const FormTable = () => {
         const isAllowed = () => {
             if (
                 userDetail.role === 'root' ||
-                userDetail.allowedForms.find((e) => e.formId === id).permissionType === 'write'
+                userDetail.allowedForms.find((e: any) => e.formId === id).permissionType === 'write'
             ) {
                 return true
             }
@@ -92,9 +92,9 @@ const FormTable = () => {
                         className="btn btn-md"
                     >
                         {isEditEnabled ? (
-                            <i class="fa fa-pencil-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title={t("When you open this setting, you can update it by double-clicking on the desired field")}></i>
+                            <i className="fa fa-pencil-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title={t("When you open this setting, you can update it by double-clicking on the desired field")}></i>
                         ) : (
-                            <i class="fa fa-pencil-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title={t("When you open this setting, you can update it by double-clicking on the desired field")}></i>
+                            <i className="fa fa-pencil-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title={t("When you open this setting, you can update it by double-clicking on the desired field")}></i>
                         )}
                     </button>
 
@@ -109,7 +109,7 @@ const FormTable = () => {
                         id="sil"
                         className="btn btn-md"
                     >
-                        <i class="fa fa-trash icon-red" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title={t("Delete Form")}></i>
+                        <i className="fa fa-trash icon-red" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title={t("Delete Form")}></i>
                     </button>
 
 
@@ -122,7 +122,7 @@ const FormTable = () => {
                         aria-pressed="true"
                         className="btn btn-md me-2"
                     >
-                        <i class="fa fa-arrow-left" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title={t("Turn back")}></i>
+                        <i className="fa fa-arrow-left" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title={t("Turn back")}></i>
                     </Link>
 
                 </div>
@@ -143,13 +143,14 @@ const FormTable = () => {
             .then((res) => {
                 setFormDetails(res)
                 document.title = res.formName + ' Table'
-                document.getElementById(
+                let data: any= document.getElementById(
                     'favicon'
-                ).href = `${process.env.REACT_APP_API_URL}${res.icon}`
+                ) as HTMLAnchorElement | null;
+                data.href = `${process.env.REACT_APP_API_URL}${res.icon}`
                 return res.formDetails
             })
-            .then((details) => {
-                Object.keys(details).map((item) => {
+            .then((details: any) => {
+                Object.keys(details).map((item: any) => {
                     if (isLoading) {
                         columns.push({
                             field: item,
@@ -195,7 +196,7 @@ const FormTable = () => {
                 >
                     <DataGrid
                         className="bg-white"
-                        getRowId={(row) => row._id}
+                        getRowId={(row: any) => row._id}
                         rows={documents}
                         autoHeight
                         columns={columns}
