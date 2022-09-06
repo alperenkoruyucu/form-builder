@@ -1,3 +1,5 @@
+import { loginProps} from "../sagas/types"
+
 const axios = require('axios')
 
 const HTTP = axios.create({
@@ -5,31 +7,34 @@ const HTTP = axios.create({
 })
 
 
-export const Login = (username, password) => {
+export const Login = (data:loginProps) => {
     return new Promise((resolve, reject) => {
-        HTTP.post('/api/account/login', { username, password })
-            .then((res) => resolve(res))
-            .catch((err) => reject(err))
+        HTTP.post('/api/account/login', data)
+            .then((res:any) => {
+                resolve(res)})
+            .catch((err:any) => {console.log(err);reject(err)})
     })
 }
 
-export const RegisterAsAdmin = (data) => {
+export const RegisterAsAdmin = (data:any) => {
     return new Promise((resolve, reject) => {
         HTTP.post('/api/account/register-as-admin', data, {
             headers: { 'x-access-token': localStorage.getItem('jwt') },
         })
-            .then((res) => resolve(res))
-            .catch((err) => reject(err))
+            .then((res:any) => {
+                console.log(res)
+                resolve(res)})
+            .catch((err:any) => reject(err))
     })
 }
 
 export const isExpired = () => {
     return new Promise((resolve, reject) => {
         HTTP.post('/api/account/is-expired', { token: localStorage.getItem('jwt') })
-            .then((res) => {
+            .then((res:any) => {
                 resolve(res.data)
             })
-            .catch((err) => {
+            .catch((err:any) => {
                 console.log(err)
                 reject(err)
             })
@@ -39,8 +44,8 @@ export const isExpired = () => {
 export const getRole = () => {
     return new Promise((resolve, reject) => {
         HTTP.post('/api/account/get-role', { token: localStorage.getItem('jwt') })
-            .then((res) => resolve(res.data))
-            .catch((err) => {
+            .then((res:any) => resolve(res.data))
+            .catch((err:any) => {
                 console.log(err)
                 reject(err)
             })

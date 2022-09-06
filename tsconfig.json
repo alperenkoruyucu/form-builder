@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "esModuleInterop": true,
+    "target": "esnext",
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "allowJs": true,
+    "noEmit": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve"
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+, "src/components/LoginPage.js", "src/Pages/CreateAdmin.js", "src/components/UserTable.js", "src/methods/GetUsers.js", "src/methods/DynamicForms.js", "src/Pages/FormView.js", "src/Pages/FormTable.js", "src/Pages/FormCreate.js"  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

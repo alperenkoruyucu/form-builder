@@ -4,7 +4,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { toast } from 'react-toastify'
+import { useSelector, useDispatch } from "react-redux";
 import { isExpired, Login } from '../methods/Account'
+import { useTranslation } from 'react-i18next';
+import { auth } from '../actions';
 
 const LoginPage = () => {
     const [isLoading, setLoading] = useState(false)
@@ -17,6 +20,8 @@ const LoginPage = () => {
         })
     }, [navigate])
 
+    const {t, i18n} = useTranslation()
+    const dispatch = useDispatch();
     const formik = useFormik({
         initialValues: {
             username: '',
@@ -31,8 +36,12 @@ const LoginPage = () => {
             Login(values.username, values.password)
                 .then((res) => {
                     if (res.data.token) {
+                        console.log('res.data',res.data)
                         setLoading(false)
                         localStorage.setItem('jwt', res.data.token)
+                        dispatch(auth(res.data))                        
+                        console.log("test")
+                        console.log(res.data.token)
                         navigate('/users')
                     }
                 })
@@ -53,8 +62,8 @@ const LoginPage = () => {
                             <div className="form-items login">
                                 <div className="row">
                                     <div className="form-group col-md-9">
-                                        <h3>LOG IN</h3>
-                                        <p>ACCESSING THE USER LIST</p>
+                                        <h3>{t("LOG IN")}</h3>
+                                        <p>{t("ACCESSING THE USER LIST")}</p>
                                     </div>
                                     <div
                                         style={{ textAlign: 'right' }}
@@ -65,14 +74,14 @@ const LoginPage = () => {
                                             style={{ background: '#495056' }}
                                             class="btn btn-primary"
                                         >
-                                            Back
+                                            {t("Back")}
                                         </Link>
                                     </div>
                                 </div>
                                 <form onSubmit={formik.handleSubmit} encType="">
                                     <div className="row mt-4">
                                         <div className="form-group col-md-12">
-                                            <label htmlFor="name">Username</label>
+                                            <label htmlFor="name">{t("Username")}</label>
                                             <input
                                                 type="text"
                                                 className="form-control"
@@ -88,7 +97,7 @@ const LoginPage = () => {
                                             ) : null}
                                         </div>
                                         <div className="form-group mt-4 col-md-12">
-                                            <label htmlFor="Surname">Password</label>
+                                            <label htmlFor="Surname">{t("Password")}</label>
                                             <input
                                                 type="password"
                                                 className="form-control"
@@ -115,7 +124,7 @@ const LoginPage = () => {
                                                 type="submit"
                                                 className="btn btn-primary"
                                             >
-                                                Login
+                                                {t("Login")}
                                             </button>
                                         ) : (
                                             <button

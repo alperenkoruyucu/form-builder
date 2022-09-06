@@ -2,27 +2,12 @@ import React, { useEffect, useState } from 'react'
 import '../UserCreate.css'
 import camelcase from 'camelcase'
 import useStore from '../store'
-import {
-    Button,
-    Checkbox,
-    FormControl,
-    FormControlLabel,
-    FormGroup,
-    IconButton,
-    InputLabel,
-    OutlinedInput,
-    Select,
-    TextField,
-    MenuItem,
-    FormHelperText,
-} from '@mui/material'
-import { DeleteOutlined, Add, ArrowBack } from '@material-ui/icons'
-import Tooltip from '@mui/material/Tooltip'
 import { CreateForm, GetFormDetails, UpdateForm } from '../methods/DynamicForms'
 import { getRole, isExpired } from '../methods/Account'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { v4 as uuid } from 'uuid'
+import { useTranslation } from 'react-i18next'
 
 const FormEdit = () => {
     const { id } = useParams()
@@ -42,6 +27,7 @@ const FormEdit = () => {
         formDescription: { status: false, message: null },
     })
     const navigate = useNavigate()
+    const { t, i18n } = useTranslation()
 
     useEffect(() => {
         isExpired()
@@ -145,13 +131,13 @@ const FormEdit = () => {
 
         formFields.map((item, index) => {
             if (!item.fieldName) {
-            console.log(4)
+                console.log(4)
 
                 updatedFormFields[index].fieldNameError = 'Alan adı boş bırakılamaz.'
                 isValid = false
             }
             if (!item.type && item.type !== 0) {
-            console.log(5)
+                console.log(5)
 
                 updatedFormFields[index].typeError = 'Alan tipini doldurmalısınız.'
                 isValid = false
@@ -160,7 +146,7 @@ const FormEdit = () => {
                 updatedFormFields[index].minError = 'Minimum değer maksimum değerden yüksek olamaz'
                 updatedFormFields[index].maxError = 'Minimum değer maksimum değerden yüksek olamaz'
                 isValid = false
-            console.log(6)
+                console.log(6)
 
             }
         })
@@ -178,7 +164,7 @@ const FormEdit = () => {
     const updateForm = async () => {
         console.log("a")
         const isValid = checkValidation()
-        console.log("--->,",isValid)
+        console.log("--->,", isValid)
         if (isValid) {
             const formData = new FormData()
             if (!file) setFile()
@@ -262,340 +248,239 @@ const FormEdit = () => {
                     >
                         <div className="row py-4 px-3">
                             <div className="form-group col-md-4">
-                                <h3 className="form-header text-white">Form Güncelle</h3>
+                                <h3 className="form-header text-white">{t("Update Form")}</h3>
                                 <p
                                     className="form-subtitle text-white"
                                     style={{ textTransform: 'uppercase' }}
                                 >
-                                    {formName} TASARIMINI DÜZENLE
+                                    {formName} {t("EDIT YOUR DESIGN")}
                                 </p>
                             </div>
 
-                            <div style={{ textAlign: 'right' }} className="form-group col-md-8">
-                                
-                                <a  href="/dynamic/form-list" 
-                                data-bs-toggle="tooltip" 
-                                data-bs-placement="top"     
-                                className="btn bg-white btn-sm me-2"    
-                                data-bs-title="Geri dön"><i className="fa-solid fa-arrow-left"></i></a>
+                            <div style={{ textAlign: 'right' }} className="form-group col-xs-12 col-sm-8 col-md-8">
+
+                                <a href="/dynamic/form-list"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    className="btn  btn-sm me-2"
+                                    data-bs-title="Geri dön"><i class="fa fa-arrow-left"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
 
                     <form
-                        className="needs-validation py-4  px-3"
+                        className="form-control needs-validation py-4  px-3"
                         noValidate
                         encType="multipart/formData"
                     >
                         <div className="row align-items-center">
-                            <div className="col-md-4">                                
+                            <div className="col-xs-12 col-sm-6 col-md-4">
 
-                                <label for="formName">Formun Adı</label>
+                                <label for="formName">{("Form Name")}</label>
                                 <input
-                                                type="text"
-                                                className="form-control"
-                                                id="formName"                                                
-                                                name="formName"
-                                                placeholder='Form adı'                                                
-                                                onChange={(e) => {
-                                                    setFormName(e.target.value)
-                                                    clearNormalErrors(e.target.name)
-                                                }}
-                                                value={formName}
-                                            />
+                                    type="text"
+                                    className="form-control"
+                                    id="formName"
+                                    name="formName"
+                                    placeholder={t('Form adı')}
+                                    onChange={(e) => {
+                                        setFormName(e.target.value)
+                                        clearNormalErrors(e.target.name)
+                                    }}
+                                    value={formName}
+                                />
                             </div>
-                            <div className="col-md-4">                                
+                            <div className="col-xs-12 col-sm-6 col-md-4">
 
-                                <label for= "demo-multiple-checkbox-label"> Bir renk seçiniz</label>                            
-                                <select className="form-control" 
-                                        id="demo-multiple-checkbox" 
-                                        aria-label="Default select example"
-                                        value={selectedColor || null}
-                                        sx={{ width: '100%' }}
-                                        name="selectedColor"
-                                        onChange={(e) => {
-                                            setSelectedColor(e.target.value)
-                                            clearNormalErrors(e.target.name)
-                                        }}
-                                    >
-                                        {colors.map((item) => { console.log(item)
-                                            return (
-                                                <option
-                                                    value={item.HEX}
-                                                    className="d-flex justify-content-between align-items-center"
-                                                >                                                    
-                                                    {item.color}
-                                                </option>
-                                            )
-                                        })}                                   
-                                    
+                                <label for="demo-multiple-checkbox-label"> {t("Choose a color")}</label>
+                                <select className="form-control"
+                                    id="demo-multiple-checkbox"
+                                    aria-label="Default select example"
+                                    value={selectedColor || null}
+                                    sx={{ width: '100%' }}
+                                    name="selectedColor"
+                                    onChange={(e) => {
+                                        setSelectedColor(e.target.value)
+                                        clearNormalErrors(e.target.name)
+                                    }}
+                                >
+                                    {colors.map((item) => {
+                                        console.log(item)
+                                        return (
+                                            <option
+                                                value={item.HEX}
+                                                className="d-flex justify-content-between align-items-center"
+                                            >
+                                                {item.color}
+                                            </option>
+                                        )
+                                    })}
+
                                 </select>
-                                                      
-                            </div>
-                            
-                            <div className="col-md-4 align-items-center d-flex justify-content-evenly">
-                                {/* <FormControl error={errors.file.status}>
-                                    <Button variant="contained" component="label">
-                                        Form İkonu Yükle
-                                        <input
-                                            type="file"
-                                            hidden
-                                            name="file"
-                                            onChange={(e) => {
-                                                setFile(e.target.files[0])
-                                                clearNormalErrors(e.target.name)
-                                            }}
-                                        />
-                                    </Button>
 
-                                    <FormHelperText>{errors.file.message || null}</FormHelperText>
-                                </FormControl>
-                                {file && <label>{file.name}</label>} */}
-                                
-                                <label for="formFileSm" className="form-label">Fotoğraf Seçiniz</label>
-                                <input className="form-control form-control-sm" 
-                                id="formFileSm" 
-                                type="file" 
-                                onChange={(e) => 
-                                    {
-                                    setFile(e.target.files[0])
-                                     clearNormalErrors(e.target.name)
-                                    }}/>                                                                 
-                                    
+                            </div>
+
+                            <div className="col-xs-12 col-sm-10 col-md-4 align-items-center d-flex justify-content-evenly my-2">
+
+
+                                <label for="formFileSm" className="form-label">{t("Choose a photo")}</label>
+                                <input className="form-control form-control-sm"
+                                    id="formFileSm"
+                                    type="file"
+                                    onChange={(e) => {
+                                        setFile(e.target.files[0])
+                                        clearNormalErrors(e.target.name)
+                                    }} />
+
                                 {file && <label>{file.name}</label>}
 
                             </div>
                         </div>
 
                         <div className="row align-items-center mx-1 mt-3">
-                            
-                            <label for="formDecription">Form Açıklaması</label>
-                            <textarea className="form-control" 
-                            id="formDescription" 
-                            rows="2" 
-                            value={formDescription}
-                            onChange={(e) => {
+
+                            <label for="formDecription">{t("Form Description")}</label>
+                            <textarea className="form-control"
+                                id="formDescription"
+                                placeholder='Form açıklamasını giriniz'
+                                rows="2"
+                                value={formDescription}
+                                onChange={(e) => {
                                     setFormDescription(e.target.value)
                                     clearNormalErrors(e.target.name)
                                 }}
-                            error={errors.formDescription.status}
-                            helperText={errors.formDescription.message}></textarea>
-                            
+                                error={errors.formDescription.status}
+                                helperText={errors.formDescription.message}></textarea>
+
                         </div>
                         <div className="d-flex justify-content-center align-items-center mt-2">
-                            {/* <IconButton
+
+
+                            <button
+                                type="button"
+                                className="btn btn-primary"
                                 onClick={() =>
                                     setFormFields((formFields) => [...formFields, { id: uuid() }])
                                 }
-                            >
-                                <Tooltip title="Alan Ekle">
-                                    <Add />
-                                </Tooltip>
-                            </IconButton> */}
-                            
-                            <button 
-                            type="button" 
-                            className="btn btn-primary" 
-                            onClick={() =>
-                                    setFormFields((formFields) => [...formFields, { id: uuid() }])
-                                }
-                            >Ekle</button>
+                            >{t("Add")}</button>
 
                         </div>
                         {formFields.map((field, index) => {
                             return (
                                 <form onChange={(e) => handleInputChange(index, e)} key={field.id}>
                                     <div className="col mt-2 align-items-center">
+                                        <hr />
                                         <div className="row">
-                                            <div className="col-md-3">
-                                                {/* <TextField
+                                            <div className="col-xs-12 col-sm-4 col-md-2 my-2">
+
+
+                                                <label for="outlined-basic">{t("Domain Name")}</label>
+                                                <input
+                                                    type="text"
+                                                    placeholder={t("Type")}
+                                                    className="form-control"
                                                     id="outlined-basic"
-                                                    sx={{ width: '100%' }}
-                                                    label="Alan Adı"
-                                                    variant="outlined"
                                                     name="fieldName"
                                                     value={field.fieldName}
-                                                    helperText={field.fieldNameError || null}
-                                                    error={field.fieldNameError}
-                                                /> */}
-
-                                                <label for="outlined-basic">Alan Adı</label>
-                                                <input
-                                                type="text"
-                                                className="form-control"
-                                                id="outlined-basic"                                                
-                                                name="fieldName"                                             
-                                                value={field.fieldName}
                                                 />
                                             </div>
-                                            <div className="col-md-2">
-                                                {/* <FormControl
-                                                    sx={{ width: 'auto', display: 'flex' }}
-                                                    error={field.typeError}
-                                                >
-                                                    <InputLabel id="demo-multiple-checkbox-label">
-                                                        Alan Tipi
-                                                    </InputLabel>
-                                                    <Select
-                                                        labelId="demo-multiple-checkbox-label"
-                                                        id="demo-multiple-checkbox"
-                                                        input={<OutlinedInput label="Alan Tipi" />}
-                                                        name="type"
-                                                        value={field.type}
-                                                        onChange={(e) =>
-                                                            handleInputChange(index, e)
-                                                        }
-                                                    >
-                                                        {fieldTypes.map((item, index) => {
-                                                            return (
-                                                                <MenuItem
-                                                                    key={index}
-                                                                    value={index}
-                                                                    className=""
-                                                                >
-                                                                    {item.typeName}
-                                                                </MenuItem>
-                                                            )
-                                                        })}
-                                                    </Select>
-                                                    <FormHelperText>
-                                                        {field.typeError || null}
-                                                    </FormHelperText>
-                                                </FormControl> */}
+                                            <div className="col-xs-12 col-sm-4 col-md-2 my-2">
 
-                                                <label for= "demo-multiple-checkbox-label"> Alan Tipi</label>                            
-                                                <select className="form-control" 
-                                                        id="demo-multiple-checkbox" 
-                                                        aria-label="Default select example"
-                                                        value={field.type}                                                        
-                                                        name="type"
-                                                        onChange={(e) => 
-                                                            handleInputChange(index, e)
-                                                        }
-                                                    >
-                                                        {fieldTypes.map((item, index) => {
-                                                            return (
-                                                                <option
-                                                                    key={index}
-                                                                    value={index}
-                                                                    className=""
-                                                                >
-                                                                    {item.typeName}
-                                                                </option>
-                                                            )
-                                                        })}                                   
-                                                    
+
+                                                <label for="demo-multiple-checkbox-label">{t("Type")}</label>
+                                                <select className="form-control"
+                                                    id="demo-multiple-checkbox"
+                                                    aria-label="Default select example"
+                                                    value={field.type}
+                                                    name="type"
+                                                    onChange={(e) =>
+                                                        handleInputChange(index, e)
+                                                    }
+                                                >
+                                                    {fieldTypes.map((item, index) => {
+                                                        return (
+                                                            <option
+                                                                key={index}
+                                                                value={index}
+                                                                className=""
+                                                            >
+                                                                {item.typeName}
+                                                            </option>
+                                                        )
+                                                    })}
+
                                                 </select>
                                             </div>
-                                            <div className="col-md-2">
-                                                {/* <Tooltip title="Kullanıcıya gireceği değer hakkında örnek veri">
-                                                    <TextField
-                                                        id="outlined-basic"
-                                                        sx={{ width: '100%' }}
-                                                        label="İpucu"
-                                                        variant="outlined"
-                                                        name="placeholder"
-                                                        value={field.placeholder || ''}
-                                                        type={placeholderType(field.type)}
-                                                    />
-                                                </Tooltip> */}
+                                            <div className="col-xs-12 col-sm-2 col-md-2 my-2">
 
-                                                <label for="outlined-basic">İpucu</label>
+
+                                                <label for="outlined-basic">{("Hint")}</label>
                                                 <input
-                                                type={placeholderType(field.type)}
-                                                sx={{ width: '100%' }}
-                                                variant="outlined"
-                                                className="form-control"
-                                                id="outlined-basic"                                                
-                                                name="placeholder"                                             
-                                                value={field.placeholder || ''}
+                                                    type={placeholderType(field.type)}
+                                                    placeholder="İpucu"
+                                                    sx={{ width: '100%' }}
+                                                    variant="outlined"
+                                                    className="form-control"
+                                                    id="outlined-basic"
+                                                    name="placeholder"
+                                                    value={field.placeholder || ''}
                                                 />
                                             </div>
-                                            <div className="col-md-2 d-flex justify-content-between">
-                                                {/* <TextField
+                                            <div className="col-xs-12 col-sm-6 col-md-2 my-2">
+
+                                                <label
+                                                    className="form-label"
+                                                    for="typeNumber"
+                                                >Min:</label>
+                                                <input
                                                     disabled={isMinMaxDisabled(field.type)}
+                                                    className="form-control mx-1"
                                                     name="min"
-                                                    className="mx-1"
-                                                    label="Min"
-                                                    type="number"
                                                     value={field.min}
-                                                    InputProps={{ inputProps: { min: 0 } }}
+                                                    min="1"
                                                     error={field.minError}
                                                     helperText={field.minError || null}
-                                                /> */}
+                                                    type="number" />
+
+
+
+                                            </div>
+                                            <div className="col-xs-12 col-sm-6 col-md-2 my-2">
                                                 <label
-                                                className="form-label" 
-                                                for="typeNumber"
-                                                >Min:</label>  
+                                                    className="form-label"
+                                                    for="typeNumber"
+                                                >Max:
+                                                </label>
                                                 <input
-                                                disabled={isMinMaxDisabled(field.type)}
-                                                className="form-control mx-1" 
-                                                name="min"
-                                                value={field.min}
-                                                min="1"
-                                                error={field.minError}
-                                                helperText={field.minError || null}
-                                                type="number" />
-                                                {/* <TextField
                                                     disabled={isMinMaxDisabled(field.type)}
+                                                    className="form-control mx-1"
                                                     name="max"
-                                                    className="mx-1"
-                                                    label="Maks"
-                                                    type="number"
+                                                    min="1"
                                                     value={field.max}
-                                                    InputProps={{ inputProps: { min: 0 } }}
-                                                    error={field.maxError}
-                                                    helperText={field.maxError || null}
-                                                /> */}                                            
-
-                                                <label
-                                                className="form-label" 
-                                                for="typeNumber"
-                                                >Maks:</label>  
-                                                <input
-                                                disabled={isMinMaxDisabled(field.type)}
-                                                className="form-control mx-1" 
-                                                name="max"
-                                                min="1"
-                                                value={field.max}                                                
-                                                error={field.minError}
-                                                helperText={field.minError || null}
-                                                type="number"
-                                                 />                                             
-
-                                                
-                                            </div>
-
-                                            <div className="col-md-2">
-                                                {/* <FormGroup>
-                                                    <FormControlLabel
-                                                        control={<Checkbox name="required" />}
-                                                        label="Zorunlu alan"
-                                                        value={field.required}
-                                                    />
-                                                </FormGroup> */}
-                                                <p>Zorunlu Alan</p>
-                                                <input 
-                                                type="checkbox" 
-                                                label="Zorunlu alan"
-                                                value={field.required}
+                                                    error={field.minError}
+                                                    helperText={field.minError || null}
+                                                    type="number"
                                                 />
-                                                
                                             </div>
-                                            <div className="col-md-1">
-                                                {/* <IconButton
-                                                    color="error"
-                                                    onClick={() => {
-                                                        deleteFormField(index)
-                                                    }}
-                                                >
-                                                    <DeleteOutlined />
-                                                </IconButton> */}
+
+                                            <div className="col-xs-12 col-sm-5 col-md-1">
+
+                                                <p>{t("Required Field")}</p>
+                                                <input
+                                                    type="checkbox"
+                                                    label="Zorunlu alan"
+                                                    value={field.required}
+                                                />
+
+                                            </div>
+                                            <div className="col-xs-12 col-sm-1 col-md-1">
+
 
                                                 <button className="btn" color="error"
                                                     onClick={() => {
-                                                    deleteFormField(index)
-                                                    }}><i className="fa fa-trash"></i>
+                                                        deleteFormField(index)
+                                                    }}><i className="fa fa-trash icon-black"></i>
                                                 </button>
 
                                             </div>
@@ -605,31 +490,23 @@ const FormEdit = () => {
                             )
                         })}
                         <div className="d-flex justify-content-center align-items-center mt-2">
-                            {/* <Button
+
+
+                            <button type="button"
+                                className="btn btn-primary"
                                 variant="contained"
                                 onClick={(e) => {
                                     e.preventDefault()
                                     updateForm()
                                 }}
                             >
-                                Kaydet
-                            </Button> */}
-
-                            <button type="button" 
-                                className="btn btn-primary"
-                                variant="contained"
-                                onClick={(e) => {
-                                e.preventDefault()
-                                updateForm()
-                                }}
-                            >
-                            Kaydet
+                                {t("Save")}
                             </button>
                         </div>
                     </form>
                 </div>
             ) : (
-                <div>Loading</div>
+                <div>{t("Loading...")}</div>
             )}
         </div>
     )

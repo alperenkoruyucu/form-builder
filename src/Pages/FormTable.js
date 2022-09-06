@@ -7,15 +7,12 @@ import {
     UpdateSelectedDocument,
 } from '../methods/DynamicForms'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { Button } from '@mui/material'
-import { Delete } from '@material-ui/icons'
-import { ArrowBack, EditOff, Edit } from '@mui/icons-material/'
 import Swal from 'sweetalert2'
 import useStore from '../store'
 import { isExpired } from '../methods/Account'
-import Tooltip from '@mui/material/Tooltip'
 import { toast } from 'react-toastify'
 import { GetUserDetails } from '../methods/GetUsers'
+import { useTranslation } from 'react-i18next'
 
 const FormTable = () => {
     const { id } = useParams()
@@ -29,6 +26,7 @@ const FormTable = () => {
     const store = useStore()
     const { toggleUpdate } = store
     const { isUpdated } = store
+    const {t, i18n} = useTranslation()
     const navigate = useNavigate()
 
     const Toolbar = (props) => {
@@ -79,54 +77,54 @@ const FormTable = () => {
                 sx={{ backgroundColor: formDetails.primaryColor }}
             >
                 <div className="row mt-3 mb-2 ms-1">
-                    <h3 className="form-header text-white">{formDetails.formName} Verileri</h3>
+                    <h3 className="form-header text-white">{formDetails.formName} {t("Datas")}</h3>
                 </div>
                 <div>
-                    <Tooltip title="Bu ayarı açtığınızda istediğiniz alana çift tıklayarak güncelleyebilirsiniz">
-                        <button
-                            disabled={!isAllowed()}
-                            style={{
-                                marginLeft: '0.4rem',
-                            }}
-                            type="button"
-                            onClick={() => setEditEnabled(!isEditEnabled)}
-                            id="sil"
-                            className="btn bg-white btn-sm"
-                        >
-                            {isEditEnabled ? (
-                                <EditOff htmlColor="orange" />
-                            ) : (
-                                <Edit htmlColor="orange" />
-                            )}
-                        </button>
-                    </Tooltip>
-                    <Tooltip title="Seçili satırları sil">
-                        <button
-                            disabled={!isAllowed()}
-                            style={{
-                                marginLeft: '0.4rem',
-                            }}
-                            type="button"
-                            onClick={handleClick}
-                            id="sil"
-                            className="btn bg-white btn-sm"
-                        >
-                            <Delete htmlColor="red" />
-                        </button>
-                    </Tooltip>
-                    <Tooltip title="Geri Dön">
-                        <Link
-                            style={{
-                                marginLeft: '0.4rem',
-                            }}
-                            to={'/dynamic/form-list'}
-                            id="backButton"
-                            aria-pressed="true"
-                            className="btn bg-white btn-sm me-2"
-                        >
-                            <ArrowBack />
-                        </Link>
-                    </Tooltip>
+
+                    <button
+                        disabled={!isAllowed()}
+                        style={{
+                            marginLeft: '0.4rem',
+                        }}
+                        type="button"
+                        onClick={() => setEditEnabled(!isEditEnabled)}
+                        id="sil"
+                        className="btn btn-md"
+                    >
+                        {isEditEnabled ? (
+                            <i class="fa fa-pencil-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title={t("When you open this setting, you can update it by double-clicking on the desired field")}></i>
+                        ) : (
+                            <i class="fa fa-pencil-square" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title={t("When you open this setting, you can update it by double-clicking on the desired field")}></i>
+                        )}
+                    </button>
+
+
+                    <button
+                        disabled={!isAllowed()}
+                        style={{
+                            marginLeft: '0.4rem',
+                        }}
+                        type="button"
+                        onClick={handleClick}
+                        id="sil"
+                        className="btn btn-md"
+                    >
+                        <i class="fa fa-trash icon-red" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title={t("Delete Form")}></i>
+                    </button>
+
+
+                    <Link
+                        style={{
+                            marginLeft: '0.4rem',
+                        }}
+                        to={'/dynamic/form-list'}
+                        id="backButton"
+                        aria-pressed="true"
+                        className="btn btn-md me-2"
+                    >
+                        <i class="fa fa-arrow-left" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title={t("Turn back")}></i>
+                    </Link>
+
                 </div>
             </GridToolbarContainer>
         )

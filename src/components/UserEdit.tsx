@@ -7,9 +7,10 @@ import * as Yup from 'yup'
 import { toast } from 'react-toastify' //, ToastContainer
 import 'react-toastify/dist/ReactToastify.css'
 import useStore from '../store'
+import { useTranslation } from 'react-i18next'
+import { AnyARecord } from 'dns'
 
-
-const UserEdit = (props) => {
+const UserEdit = (props: any) => {
     const titles = [
         'Software Engineer',
         'DevOps Engineer',
@@ -23,12 +24,12 @@ const UserEdit = (props) => {
         'Intern',
         'Other',
     ]
-
+    const {t, i18n} = useTranslation()
     const store = useStore()
     const toggleUpdate = store.toggleUpdate
     const [isLoading, setLoading] = useState(false)
 
-    const urlToObject = async (image) => {
+    const urlToObject = async (image: any) => {
         const response = await fetch(process.env.REACT_APP_API_URL + image)
         const blob = await response.blob()
         const file = new File([blob], 'image.jpg', { type: blob.type })
@@ -88,7 +89,7 @@ const UserEdit = (props) => {
                 .required('About is a required field'),
         }),
 
-        onSubmit: async (values) => {
+        onSubmit: async (values: any) => {
             setLoading(true)
 
             var form_data = new FormData()
@@ -120,7 +121,7 @@ const UserEdit = (props) => {
                 <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
                     <div className="row mt-4">
                         <div className="form-group col-md-6 col-sm-12">
-                            <label for="Surname">Full Name</label>
+                            <label htmlFor="Surname">{t("Full Name")}</label>
                             <input
                                 type="text"
                                 className="form-control mt-2"
@@ -136,7 +137,7 @@ const UserEdit = (props) => {
                             ) : null}
                         </div>
                         <div className="form-group col-md-6 col-sm-12">
-                            <label for="email">Email</label>
+                            <label htmlFor="email">Email</label>
                             <input
                                 type="email"
                                 className="form-control mt-2"
@@ -154,8 +155,8 @@ const UserEdit = (props) => {
                     </div>
                     <div className="row mt-4">
                         <div className="form-group col-md-4 col-sm-12">
-                            <label className="mb-2" for="FirstJobDay">
-                                Orion Start Day
+                            <label className="mb-2" htmlFor="FirstJobDay">
+                                {t("Orion Start Day")}
                             </label>
                             <div className="form-group">
                                 <input
@@ -173,17 +174,17 @@ const UserEdit = (props) => {
                             </div>
                         </div>
                         <div className="form-group col-md-4 col-sm-12">
-                            <label for="FirstJobDay">Position</label>
+                            <label htmlFor="FirstJobDay">{t("Position")}</label>
                             <select
                                 onChange={formik.handleChange}
                                 name="workTitle"
-                                class="form-select mt-2"
+                                className="form-select mt-2"
                                 value={formik.values.workTitle}
                             >
-                                {titles.map((item, index) => {
+                                {titles.map((item: string, index: any) => {
                                     return (
                                         <option
-                                            {...(props.data.workTitle == item ? 'selected' : null)}
+                                            {...(props.data.workTitle == item ? 'selected' : null) as {}}
                                             value={item}
                                         >
                                             {item}
@@ -194,7 +195,7 @@ const UserEdit = (props) => {
                         </div>
                         <div className="form-group col-md-4 col-sm-12">
                             <div className="form-group">
-                                <label for="university">Department</label>
+                                <label htmlFor="university">{t("Department")}</label>
                                 <input
                                     type="text"
                                     className="form-control mt-2"
@@ -214,8 +215,8 @@ const UserEdit = (props) => {
                     <div className="row mt-4">
                         <div className="form-group mt-2 col-md-2">
                             <div className="form-group">
-                                <label className="mb-3" for="file">
-                                    Current Photo
+                                <label className="mb-3" htmlFor="file">
+                                    {t("Current Photo")}
                                 </label>
                                 <div className="currentPhoto">
                                     <img
@@ -227,15 +228,15 @@ const UserEdit = (props) => {
                         </div>
                         <div className="form-group mt-5 col-md-10">
                             <div className="form-group">
-                                <label className="mb-3" for="file">
-                                    Click to update photo
+                                <label className="mb-3" htmlFor="file">
+                                    {t("Click to update photo")}
                                 </label>
                                 <input
                                     type="file"
                                     className="form-control"
                                     id="file"
                                     name="file"
-                                    onChange={(e) => {
+                                    onChange={(e: any) => {
                                         formik.setFieldValue('file', e.target.files[0])
                                     }}
                                 />
@@ -246,7 +247,7 @@ const UserEdit = (props) => {
                     <div className="row mt-4">
                         <div className="form-group mt-1 col-md-9 col-sm-12">
                             <div className="form-group">
-                                <label for="university">University</label>
+                                <label htmlFor="university">{t("University")}</label>
                                 <input
                                     type="text"
                                     className="form-control mt-2"
@@ -263,8 +264,8 @@ const UserEdit = (props) => {
                             </div>
                         </div>
                         <div className="form-group mt-1 col-md-3 col-sm-12">
-                            <label className="mb-2" for="GraduationTime">
-                                Graduation
+                            <label className="mb-2" htmlFor="GraduationTime">
+                                {t("Graduation")}
                             </label>
                             <div className="form-group">
                                 <input
@@ -284,7 +285,7 @@ const UserEdit = (props) => {
                     </div>
                     <div className="row mt-4">
                         <div className="form-group mt-1 col-md-4 col-sm-12">
-                            <label for="PreviousJob">Previous Job</label>
+                            <label htmlFor="PreviousJob">{t("Previous Job")}</label>
                             <input
                                 type="text"
                                 className="form-control mt-2"
@@ -300,7 +301,7 @@ const UserEdit = (props) => {
                             ) : null}
                         </div>
                         <div className="form-group mt-1 col-md-4 col-sm-12">
-                            <label for="PreviousJob">Previous Position</label>
+                            <label htmlFor="PreviousJob">{t("Previous Position")}</label>
                             <input
                                 type="text"
                                 className="form-control mt-2"
@@ -313,7 +314,7 @@ const UserEdit = (props) => {
                         </div>
                         <div className="form-group mt-1 col-md-4 col-sm-12">
                             <div className="form-group">
-                                <label for="TotalWorkTime">Total Experience</label>
+                                <label htmlFor="TotalWorkTime">{t("Total Experience")}</label>
                                 <input
                                     type="text"
                                     className="form-control mt-2"
@@ -329,7 +330,7 @@ const UserEdit = (props) => {
                     </div>
                     <div className="row mt-4">
                         <div className="form-group mt-1 col-md-12 col-sm-12">
-                            <label for="Skills">Technical Skills</label>
+                            <label htmlFor="Skills">{t("Technical Skills")}</label>
                             <textarea
                                 className="form-control mt-2"
                                 id="Skills"
@@ -347,7 +348,7 @@ const UserEdit = (props) => {
                     </div>
                     <div className="row mt-4">
                         <div className="form-group mt-1 col-md-12 col-sm-12">
-                            <label for="Description">About</label>
+                            <label htmlFor="Description">{t("About")}</label>
                             <textarea
                                 className="form-control mt-2"
                                 name="description"
@@ -362,15 +363,15 @@ const UserEdit = (props) => {
                             ) : null}
                         </div>
                     </div>
-                    <div style={{ textAlign: 'center' }} class="form-button mt-4">
+                    <div style={{ textAlign: 'center' }} className="form-button mt-4">
                         {!isLoading ? (
-                            <button id="submit" type="submit" class="btn btn-primary">
-                                Update
+                            <button id="submit" type="submit" className="btn btn-primary">
+                                {t("Update")}
                             </button>
                         ) : (
-                            <button id="submit" type="submit" class="btn btn-primary">
+                            <button id="submit" type="submit" className="btn btn-primary">
                                 <span
-                                    class="spinner-border spinner-border-sm"
+                                    className="spinner-border spinner-border-sm"
                                     role="status"
                                     aria-hidden="true"
                                 ></span>

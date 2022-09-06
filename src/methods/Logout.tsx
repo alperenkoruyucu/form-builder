@@ -1,4 +1,4 @@
-const Logout = (navigate) => {
+const Logout = (navigate:any) => {
     localStorage.removeItem('jwt')
     navigate('/dynamic')
 }

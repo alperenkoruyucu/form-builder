@@ -7,7 +7,7 @@ import Swal from 'sweetalert2'
 import useStore from '../store'
 
 const FormView = () => {
-    console.log('ahmet')
+    
     const { id } = useParams()
     const [formInfo, setFormInfo] = useState([])
     const [formLabels, setFormLabels] = useState([])

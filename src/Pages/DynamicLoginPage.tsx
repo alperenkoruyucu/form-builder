@@ -4,10 +4,14 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { toast } from 'react-toastify'
 import { isExpired, Login } from '../methods/Account'
+import { useTranslation } from 'react-i18next'
+import { useSelector, useDispatch } from "react-redux";
+import { auth } from '../actions';
 
-const DynamicLoginPage = () => {
-    console.log('ahmet')
+const DynamicLoginPage = () => {    
+    const {t, i18n} = useTranslation()
     const [isLoading, setLoading] = useState(false)
+    const dispatch = useDispatch();
     const navigate = useNavigate()
     useEffect(() => {
         isExpired().then((res) => {
@@ -17,7 +21,7 @@ const DynamicLoginPage = () => {
         })
     }, [navigate])
 
-    const formik = useFormik({
+    const formik: any = useFormik({
         initialValues: {
             username: '',
             password: '',
@@ -28,10 +32,15 @@ const DynamicLoginPage = () => {
         }),
         onSubmit: (values) => {
             setLoading(true)
-            Login(values.username, values.password)
-                .then((res) => {
+            let data = {
+                username:values.username,
+                password:values.password
+            }
+            Login(data)
+                .then((res:any) => {
                     if (res.data.token) {
-                        localStorage.setItem('jwt', res.data.token)
+                        localStorage.setItem('jwt', res.data.token) 
+                        dispatch(auth(res.data))   
                         navigate('/dynamic/form-list')
                     }
                 })
@@ -52,8 +61,8 @@ const DynamicLoginPage = () => {
                             <div className="form-items login">
                                 <div className="row">
                                     <div className="form-group col-md-9">
-                                        <h3>LOG IN</h3>
-                                        <p>ACCESSING PANEL</p>
+                                        <h3>{t("LOG IN")}</h3>
+                                        <p>{t("ACCESSING PANEL")}</p>
                                     </div>
                                     <div
                                         style={{ textAlign: 'right' }}
@@ -62,16 +71,16 @@ const DynamicLoginPage = () => {
                                         <Link
                                             to="/"
                                             style={{ background: '#495056' }}
-                                            class="btn btn-primary"
+                                            className="btn btn-primary"
                                         >
-                                            Back
+                                            {t("Back")}
                                         </Link>
                                     </div>
                                 </div>
                                 <form onSubmit={formik.handleSubmit} encType="">
                                     <div className="row mt-4">
                                         <div className="form-group col-md-12">
-                                            <label htmlFor="name">Username</label>
+                                            <label htmlFor="name">{t("Username")}</label>
                                             <input
                                                 type="text"
                                                 className="form-control"
@@ -87,7 +96,7 @@ const DynamicLoginPage = () => {
                                             ) : null}
                                         </div>
                                         <div className="form-group mt-4 col-md-12">
-                                            <label htmlFor="Surname">Password</label>
+                                            <label htmlFor="Surname">{t("Password")}</label>
                                             <input
                                                 type="password"
                                                 className="form-control"
@@ -114,7 +123,7 @@ const DynamicLoginPage = () => {
                                                 type="submit"
                                                 className="btn btn-primary"
                                             >
-                                                Login
+                                                {t("Login")}
                                             </button>
                                         ) : (
                                             <button

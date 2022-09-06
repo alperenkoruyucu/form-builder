@@ -1,7 +1,8 @@
 import create from 'zustand'
 
-const useStore = create((set) => ({
+const useStore = create((set: any) => ({
     colors: [
+               
         {
             HEX: '#FF2D55',
             color: 'Red Pink',
@@ -42,7 +43,7 @@ const useStore = create((set) => ({
         { typeName: 'E-mail', type: 'String' },
     ],
     isUpdated: false,
-    toggleUpdate: () => set((state) => ({ isUpdated: !state.isUpdated })),
+    toggleUpdate: () => set((state: any) => ({ isUpdated: !state.isUpdated })),
 }))
 
 export default useStore

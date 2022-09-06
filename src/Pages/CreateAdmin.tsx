@@ -1,40 +1,40 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
-import AddCircleSharpIcon from '@material-ui/icons/AddCircleSharp'
 import { getRole, isExpired } from '../methods/Account'
 import { CreateAdminAccount, GetAvailableForms } from '../methods/DynamicForms'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 import useStore from '../store'
 import { v4 as uuid } from 'uuid'
-import { ArrowBack } from '@mui/icons-material'
-import { Tooltip } from '@material-ui/core'
+import { useTranslation } from 'react-i18next'
+import { FormikValues } from 'formik'
 
 const CreateAdmin = () => {
     const navigate = useNavigate()
-    const [forms, setForms] = useState([])
+    const [forms, setForms] = useState<any>([])
     const [isLoading, toggleLoading] = useState(true)
-    const [formPermission, setFormPermission] = useState([])
+    const [formPermission, setFormPermission] = useState<any>([])
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const store = useStore()
     const { toggleUpdate } = store
     const [show, setShow] = useState(false)
     const [inputType, setInputType] = useState()
-    const [selectedForm, setSelectedForm] = useState()
+    const [selectedForm, setSelectedForm] = useState<any>()
+    const {t, i18n} = useTranslation()
 
-    const removePermission = (index) => {
-        setFormPermission(formPermission.filter((item) => formPermission.indexOf(item) !== index))
+    const removePermission = (index: any) => {
+        setFormPermission(formPermission.filter((item: any) => formPermission.indexOf(item) !== index))
     }
 
     const handleAddFields = () => {
         setFormPermission([...formPermission, { id: uuid(), show: false }])
     }
 
-    const handlePermissionValueParent = (index, event) => {
+    const handlePermissionValueParent = (index: any, event: any) => {
         if (
             event.target.name === 'formId' &&
-            formPermission.find((e) => e.formId === event.target.value)
+            formPermission.find((e: any) => e.formId === event.target.value)
         ) {
             Swal.fire({
                 icon: 'error',
@@ -48,14 +48,14 @@ const CreateAdmin = () => {
         }
     }
 
-    const handleSubmit = (e) => {
-        const body = {}
+    const handleSubmit = (e: any) => {
+        const body: any = {}
         body.username = username
         body.password = password
-        const allowedForms = []
-        formPermission.map((item) => {
-            const form = {}
-            Object.keys(item).forEach((key) => {
+        const allowedForms: any[] = []
+        formPermission.map((item: any) => {
+            const form: any = {}
+            Object.keys(item).forEach((key: any) => {
                 if (key !== 'id' || key !== 'show') {
                     form[key] = item[key]
                 }
@@ -107,7 +107,7 @@ const CreateAdmin = () => {
                 if (res) {
                     navigate('/dynamic')
                 }
-                getRole().then((roleResponse) => {
+                getRole().then((roleResponse: any) => {
                     if (roleResponse.role !== 'root') navigate('/dynamic')
                 })
             })
@@ -135,34 +135,28 @@ const CreateAdmin = () => {
                                 <div className="form-items">
                                     <div className="row">
                                         <div className="form-group col-md-6">
-                                            <h3>Hesap Oluşturma ve Yetkilendirme</h3>
-                                            <p>ADMİN HESABI VE İZİNLERİ</p>
+                                            <h3>{t("Account Creation and Authorization")}</h3>
+                                            <p>{t("ADMIN ACCOUNT AND PERMISSIONS")}</p>
                                         </div>
                                         <div
                                             style={{ textAlign: 'right' }}
                                             className="form-group col-md-6"
                                         >
-                                            <Tooltip title="Geri Dön">
-                                                <Link
-                                                    style={{
-                                                        marginLeft: '0.4rem',
-                                                        backgroundColor:"#4d4c4c"
-                                                    }}
-                                                    to={'/dynamic/form-list'}
-                                                    id="backButton"
-                                                    aria-pressed="true"
-                                                    className="btn btn-sm me-2"
-                                                >
-                                                    <ArrowBack htmlColor='white'/>
-                                                </Link>
-                                            </Tooltip>
+                                            
+                                            <a  href="/dynamic/form-list" 
+                                                data-bs-toggle="tooltip" 
+                                                data-bs-placement="top"     
+                                                className="btn bg-white btn-sm me-2"    
+                                                data-bs-title="Geri dön">
+                                                <i className="fa fa-arrow-left"></i>
+                                            </a>
                                         </div>
                                     </div>
                                     <form onSubmit={handleSubmit} encType="multipart/form-data">
                                         <div className="row mt-2">
                                             <div className="form-group col-md-6 col-sm-12">
                                                 <label htmlFor="fullname">
-                                                    Kullanıcı Adı Atama
+                                                    {t("Username Assignment")}
                                                 </label>
                                                 <input
                                                     type="text"
@@ -176,7 +170,7 @@ const CreateAdmin = () => {
                                                 />
                                             </div>
                                             <div className="form-group col-md-6 col-sm-12">
-                                                <label htmlFor="fullname">Şifre Atama</label>
+                                                <label htmlFor="fullname">{t("Password Assignment")}</label>
                                                 <input
                                                     type="password"
                                                     id="password"
@@ -197,27 +191,17 @@ const CreateAdmin = () => {
                                                     onClick={() => handleAddFields()}
                                                     className="btn btn-sm text-white"
                                                 >
-                                                    <small>Form ve Yetkilerini Belirle</small>
-                                                    <AddCircleSharpIcon
-                                                        htmlColor="white"
-                                                        fontSize="small"
-                                                        style={{ marginLeft: '5px' }}
-                                                    />
+                                                    <small>{t("Determine Form and Authorizations")}</small>
+                                                    
                                                 </button>
                                             </div>
                                             <div className="col-auto">
                                                 <p className="mt-2" style={{ fontSize: '12px' }}>
-                                                    (Oluşturuduğunuz hesabı; birden çok form ile
-                                                    ilişkilendirebilir, aynı zamanda form içinde
-                                                    yetkilendirme işlemi gerçekleştirebilirsiniz.
-                                                    Seçim yapmadığınız takdirde tüm formlara erişimi
-                                                    olan bir hesap oluşturursunuz. Aynı zamanda
-                                                    seçilen bir form içinde de yetkilendirme işlemi
-                                                    gerçekleştirebilirsiniz.)
+                                                    {t("The Account")}
                                                 </p>
                                             </div>
                                         </div>
-                                        {formPermission.map((item, index) => {
+                                        {formPermission.map((item: any, index: any) => {
                                             return (
                                                 <form
                                                     key={item.id}
@@ -228,19 +212,19 @@ const CreateAdmin = () => {
                                                     }
                                                 >
                                                     <div className="form-group col-12 col-md-4 col-sm-4">
-                                                        <label htmlFor="fullname">Form Atama</label>
+                                                        <label htmlFor="fullname">{t("Form Assignment")}</label>
                                                         <select
                                                             name="formId"
                                                             id="allowedForms"
                                                             className="form-select"
-                                                            onChange={(e) => {
+                                                            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                                                                 setSelectedForm(e.target.value)
                                                             }}
                                                         >
                                                             <option selected disabled>
-                                                                Form Seç
+                                                                {t("Choose Form")}
                                                             </option>
-                                                            {forms.map((form, index) => {
+                                                            {forms.map((form: any, index: any) => {
                                                                 return (
                                                                     <option
                                                                         key={form.formName}
@@ -254,7 +238,7 @@ const CreateAdmin = () => {
                                                     </div>
                                                     <div className="form-group col-12 col-md-5 col-sm-5">
                                                         <label htmlFor="fullname">
-                                                            Yetkilendirme
+                                                            {t("Authorization")}
                                                         </label>
                                                         <select
                                                             id="permission"
@@ -262,14 +246,13 @@ const CreateAdmin = () => {
                                                             name="permissionType"
                                                         >
                                                             <option selected disabled>
-                                                                Yetki seç
+                                                                {t("Choose authorization")}
                                                             </option>
                                                             <option value="read">
-                                                                Görebilir. (Listeleme)
+                                                                {t("Can see. (Listing)")}
                                                             </option>
                                                             <option value="write">
-                                                                İşlem yapabilir.
-                                                                (Listeleme/Güncelleme/Silme)
+                                                                {t("It can operate. (Listing/Updating/Deleting)")}
                                                             </option>
                                                         </select>
                                                     </div>
@@ -284,18 +267,18 @@ const CreateAdmin = () => {
                                                                 name="show"
                                                                 id="flexCheckDefault"
                                                             />
-                                                            <label>Yetkiyi Özelleştir</label>
+                                                            <label>{t("Customize Authority")}</label>
                                                         </div>
                                                     </div>
                                                     {item.show ? (
                                                         <div className="row">
                                                             {forms.find(
-                                                                (e) => e._id === item.formId
+                                                                (e: any) => e._id === item.formId
                                                             ) ? (
                                                                 <div className="row">
                                                                     <div className="form-group col-12 col-md-6 col-sm-6 mt-4">
                                                                         <label htmlFor="fullname">
-                                                                            Form İçinde Yetkilendir
+                                                                            {t("Authorize In The Form")}
                                                                         </label>
                                                                         <select
                                                                             name="allowedField"
@@ -304,7 +287,7 @@ const CreateAdmin = () => {
                                                                             onChange={(e) => {
                                                                                 setInputType(
                                                                                     forms.find(
-                                                                                        (e) =>
+                                                                                        (e: any) =>
                                                                                             e._id ===
                                                                                             selectedForm
                                                                                     ).formDetails[
@@ -318,12 +301,11 @@ const CreateAdmin = () => {
                                                                                 selected
                                                                                 disabled
                                                                             >
-                                                                                Forma ait bir alan
-                                                                                seçiniz.
+                                                                                {t("Select a field for the form.")}
                                                                             </option>
                                                                             {Object.entries(
                                                                                 forms.find(
-                                                                                    (e) =>
+                                                                                    (e: any) =>
                                                                                         e._id ===
                                                                                         selectedForm
                                                                                 ).formDetails
@@ -335,7 +317,7 @@ const CreateAdmin = () => {
                                                                                     return (
                                                                                         <option
                                                                                             key={
-                                                                                                value.type
+                                                                                                (value as FormikValues).type
                                                                                             }
                                                                                             value={
                                                                                                 detail
@@ -344,7 +326,7 @@ const CreateAdmin = () => {
                                                                                             {detail}{' '}
                                                                                             /{' '}
                                                                                             {
-                                                                                                value.type
+                                                                                                (value as FormikValues).type
                                                                                             }
                                                                                         </option>
                                                                                     )
@@ -354,8 +336,7 @@ const CreateAdmin = () => {
                                                                     </div>
                                                                     <div className="form-group col-12 col-md-6 col-sm-6 mt-4">
                                                                         <label htmlFor="fullname">
-                                                                            Yetkili Alana Değer
-                                                                            Atama
+                                                                            {t("Assigning a Value to an Authorized Field")}
                                                                         </label>
                                                                         <input
                                                                             name="allowedValue"
@@ -369,8 +350,7 @@ const CreateAdmin = () => {
                                                                 <div className="row">
                                                                     {' '}
                                                                     <p className="formikValidate">
-                                                                        Form seçimi yapmadan yetki
-                                                                        özelleştirilemez.
+                                                                        {t("The authorization cannot be customized without making a form selection.")}
                                                                     </p>
                                                                 </div>
                                                             )}
@@ -393,7 +373,7 @@ const CreateAdmin = () => {
                                                                         removePermission(index)
                                                                     }
                                                                 >
-                                                                    Sil
+                                                                    {t("Delete")}
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -412,7 +392,7 @@ const CreateAdmin = () => {
                                                 className="btn btn-primary mt-4"
                                                 onClick={handleSubmit}
                                             >
-                                                Kaydet
+                                                {t("Save")}
                                             </button>
                                         </div>
                                     </form>

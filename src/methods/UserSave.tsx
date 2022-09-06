@@ -4,7 +4,7 @@ const HTTP = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
 })
 
-const UserSave = async (body) => {
+const UserSave = async (body: any) => {
     await HTTP.post('/api/user', body)
         .then((response) => console.log(response))
         .catch((error) => console.log(error))

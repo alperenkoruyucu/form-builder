@@ -32,6 +32,7 @@ import { isExpired } from '../methods/Account'
 import 'react-toastify/dist/ReactToastify.css'
 import useStore from '../store'
 
+
 const MyNewTitle = ({ text = 'Table Title', variant = 'h6' }) => {
     return (
         <Typography

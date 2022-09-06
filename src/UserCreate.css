@@ -1,18 +1,67 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;900&display=swap');
 
+:root {
+    --background: #f7f7f7;
+    --form-content-background: white;
+    --color-form-content: #4d4c4c;
+    --color-form-content-p: #4d4c4c;
+    --currentPhoto-border: #a2a2ab;
+    --btn-primary-backgorund-color: coral;
+    --hover-background-color: coral;
+    --formik-validate-color: red;
+    --invalid-feedback-color: #ff606e;
+    --valid-feedback-color: #2acc80;
+    --themebutton: #171717;
+    --themebutton-circle: #f7f7f7;
+    --arrow: #171717;
+    --arrowbackground: white;
+
+    
+    
+}
+
+.dark{
+    --background: #444444;
+    --form-content-background: #171717;
+    --color-form-content: #fff;
+    --color-form-content-p: #4d4c4c;
+    --currentPhoto-border: #a2a2ab;
+    --btn-primary-backgorund-color: coral;
+    --hover-background-color: coral;
+    --formik-validate-color: red;
+    --invalid-feedback-color: #ff606e;
+    --valid-feedback-color: #2acc80;
+    --themebutton: #f7f7f7;
+    --themebutton-circle: #171717;
+    --arrow: #f7f7f7;
+    --arrowbackground: #171717;
+        
+  }
+
+  
 *, body {
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    -moz-osx-font-smoothing: grayscale;
+    -moz-osx-font-smoothing: grayscale;    
 }
 
-html, body {
+html, body, .dark {
     height: 100%;
-    background-color: #d9d6d6;
+    background-color: var(--background);
     overflow: auto;
 }
+
+.navbar{
+    background-color: var(--background);    
+}
+
+form{
+    background: var(--form-content-background);
+}
+
+
 
 
 .form-holder {
@@ -46,14 +95,23 @@ html, body {
     min-width: 300px;
     text-align: left;
     -webkit-transition: all 0.4s ease;
-    transition: all 0.4s ease;
-    background-color: white;
+    transition: all 0.4s ease;  
+    
+    background-color: var(--form-content-background);
 }
 
 .form-content h3 {
-    color: #4d4c4c;
+    color: var(--color-form-content);
     text-align: left;
     font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.form-content h5 {
+    color: var(--color-form-content);
+    text-align: left;
+    font-size: 17px;
     font-weight: 600;
     margin-bottom: 5px;
 }
@@ -63,7 +121,7 @@ html, body {
 }
 
 .form-content p {
-    color: #4d4c4c;
+    color: var(--color-form-content);
     text-align: left;
     font-size: 17px;
     font-weight: 300;
@@ -72,7 +130,7 @@ html, body {
 
 
 .form-content label, .was-validated .form-check-input:invalid~.form-check-label, .was-validated .form-check-input:valid~.form-check-label{
-    color: #4d4c4c;
+    color: var(--color-form-content);
     font-weight: 400;
 
 }
@@ -83,28 +141,32 @@ html, body {
     text-align: left;
     border: 0;
     outline: 0;
+    
     border-radius: 6px;
-    background-color: #F7F7F7;
+    background-color: var(--background);
     font-size: 15px;
     font-weight: 300;
-    color: #4d4c4c;
+    color: var(--color-form-content);
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
     margin-top: 6px;
 }
 
 .currentPhoto{
-    border: 4px solid #a2a2ab;
+    border: 4px solid var(--currentPhoto-border);
     max-width: 180px;
     border-radius: 6px;
 }
 .card:hover {
-    box-shadow: 5px 6px 6px 2px #e9ecef;
+    box-shadow: 5px 6px 6px 2px var(--background);
     transform: scale(1.01)
 }
 .card {
     transition: all 0.2s ease;
     cursor: pointer
+}
+.card-body{
+    background: var(--background);
 }
 a {
     text-decoration: none !important;
@@ -116,36 +178,52 @@ a {
 }
 
 .btn-primary{
-    background-color: coral;
+    background-color: var(--btn-primary-backgorund-color);
     outline: none;
     border: 0px;
     box-shadow: none;
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active{
-    background-color: #495056;
+    background-color: var(--hover-background-color);
     outline: none !important;
     border: none !important;
-     box-shadow: none;
+    box-shadow: none;
 }
 
+.form-control {
+    background: var(--form-content-background);
+    color: var(--color-form-content);
+}
+
+.form-control input{
+    background-color: var(--background);
+}
+
+.form-control select{
+    background-color: var(--background);
+}
+
+.form-control textarea{
+    background-color: var(--background);
+}
 .form-control[type=file]:not(:disabled):not([readonly]) {
     cursor: pointer;
-    background-color: #F7F7F7;
-    color: #4d4c4c;
+    background-color: var(--background);
+    color: var(--color-form-content);
 }
 
 input#FirstJobDay {
-    background-color: #F7F7F7;
-    color: #4d4c4c;
+    background-color: var(--background);
+    color: var(--color-form-content);
 }
 button#submit {
-    color: #F7F7F7;
-    background-color: #495056;
+    color: var(--background);
+    background-color: var(--hover-background-color);
 }
 input#GraduationTime {
-    background-color: #F7F7F7;
-    color: #4d4c4c;
+    background-color: var(--background);
+    color: var(--color-form-content);
 }
 
 .login {
@@ -158,11 +236,11 @@ input#GraduationTime {
     padding: 8px 20px;
     border-radius: 6px;
     text-align: left;
-    background-color: #F7F7F7;
-    border: 0;
+    background-color: var(--background);
+    border: 25;
     font-size: 15px;
     font-weight: 300;
-    color: #4d4c4c;
+    color: var(--color-form-content);
     outline: none;
     resize: none;
     height: 120px;
@@ -172,7 +250,7 @@ input#GraduationTime {
 
 .formikValidate {
     margin-top: 2px !important;
-    color: red !important;
+    color: var(--formik-validate-color) !important;
     margin-bottom: -22px !important;
     font-size: 13px !important;
     float: right;
@@ -180,8 +258,8 @@ input#GraduationTime {
 
 .form-content textarea:hover, .form-content textarea:focus {
     border: 0;
-    background-color: #F7F7F7;
-    color: #4d4c4c;
+    background-color: var(--background);
+    color: var(--color-form-content);
 }
 
 .mv-up{
@@ -190,11 +268,11 @@ input#GraduationTime {
 }
 
 .invalid-feedback{
-    color: #ff606e;
+    color: var(--invalid-feedback-color);
 }
 
 .valid-feedback{
-   color: #2acc80;
+   color: var(--valid-feedback-color);
 }
 
 .dynamic-form-body{
@@ -206,13 +284,100 @@ input#GraduationTime {
 }
 
 .form-header{
-    color: #4d4c4c;
+    color: var(--color-form-content);
     font-size: 28px;
     font-weight: 600;
 }
 
 .form-subtitle{
-    color: #4d4c4c;
+    color: var(--color-form-content);
     font-size: 17px;
     font-weight: 300;
 }
+
+#toggle{
+    position: fixed;
+    display: block;
+    width: 64px;
+    height: 32px;
+    border-radius: 32px;
+    background: var(--themebutton);
+    transition: 0.5s;
+    cursor: pointer;
+    bottom: 50px;
+    right: 32px;
+    
+}
+
+#toggle .indicator{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 32px; 
+    height: 32px;
+    background: var(--themebutton-circle);
+    border-radius: 50%;
+    transform: scale(0.9);
+    bottom: 50px;
+    right: 32px;
+}
+
+nav ,li, a{
+    color: var(--color-form-content);
+    background: var(--background);
+}
+
+header{
+    background: var(--background);
+    display: flex;    
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.nav__links{
+    list-style: none;
+}
+.nav__links li{
+    display: inline-block;
+    padding: 0px 20px;
+}
+
+.nav__links li a:hover{
+    transition: all 0.3s ease 0;
+    color: var(--themebutton);
+}
+
+.nav__links li a{
+    color: var(--color-form-content)
+}
+
+span {
+    display: inline-block;
+    padding: 10px 20px;
+  }
+  
+  .icon-black {
+    color: var(--arrow);
+    background-color: var(--arrowbackground);
+  }
+
+  .icon-red {
+    color: red;    
+  }
+
+  .icon-green {
+    color: green;    
+  }
+
+  .icon-blue {
+    color: blue;    
+  }
+
+  .icon-orange {
+    color: rgb(255, 94, 0);     
+  }
+
+  .icon-create {
+    color: white;
+    
+  }

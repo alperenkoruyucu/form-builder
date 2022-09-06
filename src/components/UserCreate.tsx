@@ -5,12 +5,19 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { toast } from 'react-toastify'
 import UserSave from '../methods/UserSave'
+import { useTranslation } from 'react-i18next'
+
+
 
 const UserCreate = () => {
     const [isLoading, setLoading] = useState(false)
     const FILE_SIZE = 1024 * 1024
     const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png']
 
+
+    const {t, i18n} = useTranslation()
+
+    
     const titles = [
         'Software Engineer',
         'DevOps Engineer',
@@ -74,10 +81,10 @@ const UserCreate = () => {
                 .min(150, 'About must be at least 150 characters')
                 .required('About is a required field'),
         }),
-        onSubmit: (values, { resetForm }) => {
+        onSubmit: (values: any, { resetForm }) => {
             setLoading(true)
             const formData = new FormData()
-            Object.keys(values).forEach((key) => {
+            Object.keys(values).forEach((key: any) => {
                 formData.append(key, values[key])
             })
             UserSave(formData)
@@ -104,29 +111,33 @@ const UserCreate = () => {
                             <div className="form-items">
                                 <div className="row">
                                     <div className="form-group col-md-3">
-                                        <h3>Welcome</h3>
-                                        <p>TELL US ABOUT YOURSELF</p>
+                                        <h3>{t("Welcome")}</h3>
+                                        <p>{t("TELL US ABOUT YOURSELF")}</p>
                                     </div>
-                                    <div
+                                    {/* <div
                                         style={{ textAlign: 'right' }}
                                         className="form-group col-md-9"
                                     >
-                                        <Link to="/users" className="btn btn-primary">
-                                            Admin Panel
+                                        <Link to="/users" className="btn btn-primary mx-2">
+                                            {t("Admin Panel")}
                                         </Link>
-                                        <input type="checkbox" checked="checked" />
-                                    </div>
+                                        <Link to="/dynamic/form-list" className="btn btn-primary mx-2">
+                                            {t("Form List")}
+                                        </Link>
+                                        
+                                        
+                                    </div> */}
                                 </div>
                                 <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
                                     <div className="row mt-4">
                                         <div className="form-group col-md-4 col-sm-12">
-                                            <label htmlFor="fullname">Full Name</label>
+                                            <label htmlFor="fullname">{t("Full Name")}</label>
                                             <input
                                                 type="text"
                                                 className="form-control"
                                                 id="fullname"
                                                 onBlur={formik.handleBlur}
-                                                placeholder="Name Surname"
+                                                placeholder={t("Name Surname")}
                                                 name="fullname"
                                                 onChange={formik.handleChange}
                                                 value={formik.values.fullname}
@@ -158,14 +169,14 @@ const UserCreate = () => {
                                         <div className="form-group col-md-4 col-sm-12">
                                             <div className="form-group">
                                                 <label className="mb-1" htmlFor="file">
-                                                    Photo
+                                                    {t("Photo")}
                                                 </label>
                                                 <input
                                                     type="file"
                                                     className="form-control"
                                                     id="file"
                                                     name="file"
-                                                    onChange={(e) => {
+                                                    onChange={(e: any) => {
                                                         formik.setFieldValue(
                                                             'file',
                                                             e.target.files[0]
@@ -183,7 +194,7 @@ const UserCreate = () => {
                                     <div className="row mt-4">
                                         <div className="form-group mt-1 col-md-4 col-sm-12">
                                             <label className="mb-2" htmlFor="FirstJobDay">
-                                                Orion Start Day
+                                                {t("Orion Start Day")}
                                             </label>
                                             <div className="form-group">
                                                 <input
@@ -204,7 +215,7 @@ const UserCreate = () => {
                                             </div>
                                         </div>
                                         <div className="form-group mt-1 col-md-4 col-sm-12">
-                                            <label htmlFor="FirstJobDay">Position</label>
+                                            <label htmlFor="FirstJobDay">{t("Position")}</label>
                                             <select
                                                 onChange={formik.handleChange}
                                                 name="workTitle"
@@ -212,7 +223,7 @@ const UserCreate = () => {
                                                 className="form-select"
                                             >
                                                 <option value={formik.values.workTitle}>
-                                                    Open this select menu
+                                                    {t("Open this select menu")}
                                                 </option>
                                                 {titles.map((item) => {
                                                     return (
@@ -230,13 +241,13 @@ const UserCreate = () => {
                                         </div>
                                         <div className="form-group mt-1 col-md-4 col-sm-12">
                                             <div className="form-group">
-                                                <label htmlFor="department">Department</label>
+                                                <label htmlFor="department">{t("Department")}</label>
                                                 <input
                                                     type="text"
                                                     className="form-control"
                                                     onBlur={formik.handleBlur}
                                                     id="department"
-                                                    placeholder="ex: NRD2208"
+                                                    placeholder={t("ex: NRD2208")}
                                                     name="department"
                                                     onChange={formik.handleChange}
                                                     value={formik.values.department}
@@ -253,13 +264,13 @@ const UserCreate = () => {
                                     <div className="row mt-4">
                                         <div className="form-group mt-1 col-md-8 col-sm-12">
                                             <div className="form-group">
-                                                <label htmlFor="university">University</label>
+                                                <label htmlFor="university">{t("University")}</label>
                                                 <input
                                                     type="text"
                                                     className="form-control"
                                                     onBlur={formik.handleBlur}
                                                     id="university"
-                                                    placeholder="ex: Corban University"
+                                                    placeholder={t("ex: Corban University")}
                                                     name="university"
                                                     onChange={formik.handleChange}
                                                     value={formik.values.university}
@@ -274,7 +285,7 @@ const UserCreate = () => {
                                         </div>
                                         <div className="form-group mt-1 col-md-4 col-sm-12">
                                             <label className="mb-2" htmlFor="GraduationTime">
-                                                Graduation
+                                                {t("Graduation")}
                                             </label>
                                             <div className="form-group">
                                                 <input
@@ -297,27 +308,27 @@ const UserCreate = () => {
                                     </div>
                                     <div className="row mt-4">
                                         <div className="form-group mt-1 col-md-4 col-sm-12">
-                                            <label htmlFor="PreviousJob">Previous Job</label>
+                                            <label htmlFor="PreviousJob">{t("Previous Job")}</label>
                                             <input
                                                 type="text"
                                                 className="form-control"
                                                 id="PreviousJob"
                                                 name="previousJob"
-                                                placeholder="ex: Corporate consulting"
+                                                placeholder={t("ex: Corporate consulting")}
                                                 onChange={formik.handleChange}
                                                 value={formik.values.previousJob}
                                             />
                                         </div>
                                         <div className="form-group mt-1 col-md-4 col-sm-12">
                                             <label htmlFor="previousWorkTitle">
-                                                Previous Position
+                                                {t("Previous Position")}
                                             </label>
                                             <input
                                                 type="text"
                                                 className="form-control"
                                                 id="previousWorkTitle"
                                                 name="previousWorkTitle"
-                                                placeholder="ex: Backend Developer"
+                                                placeholder={t("ex: Backend Developer")}
                                                 onChange={formik.handleChange}
                                                 value={formik.values.previousJobTitle}
                                             />
@@ -325,14 +336,14 @@ const UserCreate = () => {
                                         <div className="form-group mt-1 col-md-4 col-sm-12">
                                             <div className="form-group">
                                                 <label htmlFor="TotalWorkTime">
-                                                    Total Experience
+                                                    {t("Total Experience")}
                                                 </label>
                                                 <input
                                                     type="text"
                                                     className="form-control"
                                                     id="TotalWorkTime"
                                                     name="totalWorkTime"
-                                                    placeholder="ex: 2 years "
+                                                    placeholder={t("ex: 2 years ")}
                                                     onChange={formik.handleChange}
                                                     value={formik.values.totalWorkTime}
                                                 />
@@ -341,12 +352,12 @@ const UserCreate = () => {
                                     </div>
                                     <div className="row mt-4">
                                         <div className="form-group mt-1 col-md-12 col-sm-12">
-                                            <label htmlFor="Skills">Technical Skills</label>
+                                            <label htmlFor="Skills">{t("Technical Skills")}</label>
                                             <textarea
                                                 className="form-control mt-2"
                                                 id="Skills"
                                                 name="skills"
-                                                placeholder=" ex: PHP, Vue.js, AWS.."
+                                                placeholder={t(" ex: PHP, Vue.js, AWS..")}
                                                 onBlur={formik.handleBlur}
                                                 rows="3"
                                                 onChange={formik.handleChange}
@@ -361,7 +372,7 @@ const UserCreate = () => {
                                     </div>
                                     <div className="row mt-4">
                                         <div className="form-group mt-1 col-md-12 col-sm-12">
-                                            <label htmlFor="Description">About</label>
+                                            <label htmlFor="Description">{t("About")}</label>
                                             <textarea
                                                 className="form-control mt-2"
                                                 name="description"
@@ -389,7 +400,7 @@ const UserCreate = () => {
                                                 type="submit"
                                                 className="btn btn-primary"
                                             >
-                                                Submit
+                                                {t("Submit")}
                                             </button>
                                         ) : (
                                             <button
@@ -413,6 +424,7 @@ const UserCreate = () => {
             </div>
         </div>
     )
+    
 }
 
 export default UserCreate
