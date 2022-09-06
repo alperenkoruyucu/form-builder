@@ -346,7 +346,7 @@ const UserCreate = () => {
                                                 name="skills"
                                                 placeholder={t(" ex: PHP, Vue.js, AWS..")}
                                                 onBlur={formik.handleBlur}
-                                                rows="3"
+                                                rows= "3"
                                                 onChange={formik.handleChange}
                                                 value={formik.values.skills}
                                             />
