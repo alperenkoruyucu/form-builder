@@ -81,7 +81,7 @@ const UserCreate = () => {
                 .min(150, 'About must be at least 150 characters')
                 .required('About is a required field'),
         }),
-        onSubmit: (values: any, { resetForm }) => {
+        onSubmit: (values, { resetForm }) => {
             setLoading(true)
             const formData = new FormData()
             Object.keys(values).forEach((key) => {
@@ -163,7 +163,7 @@ const UserCreate = () => {
                                                     className="form-control"
                                                     id="file"
                                                     name="file"
-                                                    onChange={(e: any) => {
+                                                    onChange={(e) => {
                                                         formik.setFieldValue(
                                                             'file',
                                                             e.target.files[0]
@@ -346,7 +346,7 @@ const UserCreate = () => {
                                                 name="skills"
                                                 placeholder={t(" ex: PHP, Vue.js, AWS..")}
                                                 onBlur={formik.handleBlur}
-                                                rows= "3"
+                                                rows="3"
                                                 onChange={formik.handleChange}
                                                 value={formik.values.skills}
                                             />
