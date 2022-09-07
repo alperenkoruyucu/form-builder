@@ -13,7 +13,6 @@ const UserCreate = () => {
     const [isLoading, setLoading] = useState(false)
     const FILE_SIZE = 1024 * 1024
     const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png']
-    const row = "3"
 
 
     const {t, i18n} = useTranslation()
@@ -82,7 +81,7 @@ const UserCreate = () => {
                 .min(150, 'About must be at least 150 characters')
                 .required('About is a required field'),
         }),
-        onSubmit: (values: any, { resetForm }) => {
+        onSubmit: (values, { resetForm }) => {
             setLoading(true)
             const formData = new FormData()
             Object.keys(values).forEach((key) => {
@@ -164,7 +163,7 @@ const UserCreate = () => {
                                                     className="form-control"
                                                     id="file"
                                                     name="file"
-                                                    onChange={(e: any) => {
+                                                    onChange={(e) => {
                                                         formik.setFieldValue(
                                                             'file',
                                                             e.target.files[0]
@@ -339,7 +338,7 @@ const UserCreate = () => {
                                         </div>
                                     </div>
                                     <div className="row mt-4">
-                                        <div className="form-group mt-1 col-md-12 col-sm-12">                                            
+                                        <div className="form-group mt-1 col-md-12 col-sm-12">
                                             <label htmlFor="Skills">{t("Technical Skills")}</label>
                                             <textarea
                                                 className="form-control mt-2"
@@ -347,7 +346,7 @@ const UserCreate = () => {
                                                 name="skills"
                                                 placeholder={t(" ex: PHP, Vue.js, AWS..")}
                                                 onBlur={formik.handleBlur}
-                                                rows={row}
+                                                rows="3"
                                                 onChange={formik.handleChange}
                                                 value={formik.values.skills}
                                             />
@@ -366,7 +365,7 @@ const UserCreate = () => {
                                                 name="description"
                                                 onBlur={formik.handleBlur}
                                                 id="description"
-                                                rows={row}
+                                                rows="3"
                                                 onChange={formik.handleChange}
                                                 value={formik.values.description}
                                             />
