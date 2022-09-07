@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import useStore from '../store'
 import { useTranslation } from 'react-i18next'
 
-const UserEdit = (props) => {
+const UserEdit = (props: any) => {
     const titles = [
         'Software Engineer',
         'DevOps Engineer',
@@ -27,20 +27,15 @@ const UserEdit = (props) => {
     const store = useStore()
     const toggleUpdate = store.toggleUpdate
     const [isLoading, setLoading] = useState(false)
+    
 
-    const urlToObject = async (image) => {
+    const urlToObject= async (image: any) => {        
         const response = await fetch(process.env.REACT_APP_API_URL + image)
         const blob = await response.blob()
         const file = new File([blob], 'image.jpg', { type: blob.type })
         return file
     }
-    //const FILE_SIZE = 1024 * 1024;
-    /*const SUPPORTED_FORMATS = [
-    "image/jpg",
-    "image/jpeg",
-    "image/png"
-  ]; */
-
+ 
     const formik = useFormik({
         initialValues: {
             fullname: props.data.fullname,
@@ -64,19 +59,7 @@ const UserEdit = (props) => {
             email: Yup.string()
                 .email('Invalid email address')
                 .required('Email is a required field'),
-            firstJobDay: Yup.date().required('Orion start day is a required field'),
-            // file: Yup.mixed()
-            //         .NoRequired("Image is a required field")
-            //         .test(
-            //             "fileSize",
-            //             "Image too large. (max: 1024 x 1024)",
-            //             value => value && value.size <= FILE_SIZE
-            //         )
-            //         .test(
-            //             "fileFormat",
-            //             "Unsupported Format. (sup: .jpg .png)",
-            //             value => value && SUPPORTED_FORMATS.includes(value.type)
-            //         ),
+            firstJobDay: Yup.date().required('Orion start day is a required field'),            
             university: Yup.string().required('University is a required field'),
             department: Yup.string().required('Orion department is a required field'),
             graduationTime: Yup.date().required('Graduation is a required field'),
@@ -88,7 +71,7 @@ const UserEdit = (props) => {
                 .required('About is a required field'),
         }),
 
-        onSubmit: async (values) => {
+        onSubmit: async (values: any) => {
             setLoading(true)
 
             var form_data = new FormData()
@@ -120,7 +103,7 @@ const UserEdit = (props) => {
                 <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
                     <div className="row mt-4">
                         <div className="form-group col-md-6 col-sm-12">
-                            <label for="Surname">{t("Full Name")}</label>
+                            <label htmlFor="Surname">{t("Full Name")}</label>
                             <input
                                 type="text"
                                 className="form-control mt-2"
@@ -136,7 +119,7 @@ const UserEdit = (props) => {
                             ) : null}
                         </div>
                         <div className="form-group col-md-6 col-sm-12">
-                            <label for="email">Email</label>
+                            <label htmlFor="email">Email</label>
                             <input
                                 type="email"
                                 className="form-control mt-2"
@@ -154,7 +137,7 @@ const UserEdit = (props) => {
                     </div>
                     <div className="row mt-4">
                         <div className="form-group col-md-4 col-sm-12">
-                            <label className="mb-2" for="FirstJobDay">
+                            <label className="mb-2" htmlFor="FirstJobDay">
                                 {t("Orion Start Day")}
                             </label>
                             <div className="form-group">
@@ -173,17 +156,19 @@ const UserEdit = (props) => {
                             </div>
                         </div>
                         <div className="form-group col-md-4 col-sm-12">
-                            <label for="FirstJobDay">{t("Position")}</label>
+                            <label htmlFor="FirstJobDay">{t("Position")}</label>
                             <select
                                 onChange={formik.handleChange}
                                 name="workTitle"
-                                class="form-select mt-2"
+                                className="form-select mt-2"
                                 value={formik.values.workTitle}
                             >
-                                {titles.map((item, index) => {
+                                {titles.map((item: any, index) => {
+                                    const data: any = props.data.workTitle == item ? 'selected' : null
                                     return (
+                                        
                                         <option
-                                            {...(props.data.workTitle == item ? 'selected' : null)}
+                                            {...(data as Record<string, unknown>)} 
                                             value={item}
                                         >
                                             {item}
@@ -194,7 +179,7 @@ const UserEdit = (props) => {
                         </div>
                         <div className="form-group col-md-4 col-sm-12">
                             <div className="form-group">
-                                <label for="university">{t("Department")}</label>
+                                <label htmlFor="university">{t("Department")}</label>
                                 <input
                                     type="text"
                                     className="form-control mt-2"
@@ -214,7 +199,7 @@ const UserEdit = (props) => {
                     <div className="row mt-4">
                         <div className="form-group mt-2 col-md-2">
                             <div className="form-group">
-                                <label className="mb-3" for="file">
+                                <label className="mb-3" htmlFor="file">
                                     {t("Current Photo")}
                                 </label>
                                 <div className="currentPhoto">
@@ -227,7 +212,7 @@ const UserEdit = (props) => {
                         </div>
                         <div className="form-group mt-5 col-md-10">
                             <div className="form-group">
-                                <label className="mb-3" for="file">
+                                <label className="mb-3" htmlFor="file">
                                     {t("Click to update photo")}
                                 </label>
                                 <input
@@ -235,7 +220,7 @@ const UserEdit = (props) => {
                                     className="form-control"
                                     id="file"
                                     name="file"
-                                    onChange={(e) => {
+                                    onChange={(e:any) => {
                                         formik.setFieldValue('file', e.target.files[0])
                                     }}
                                 />
@@ -246,7 +231,7 @@ const UserEdit = (props) => {
                     <div className="row mt-4">
                         <div className="form-group mt-1 col-md-9 col-sm-12">
                             <div className="form-group">
-                                <label for="university">{t("University")}</label>
+                                <label htmlFor="university">{t("University")}</label>
                                 <input
                                     type="text"
                                     className="form-control mt-2"
@@ -263,7 +248,7 @@ const UserEdit = (props) => {
                             </div>
                         </div>
                         <div className="form-group mt-1 col-md-3 col-sm-12">
-                            <label className="mb-2" for="GraduationTime">
+                            <label className="mb-2" htmlFor="GraduationTime">
                                 {t("Graduation")}
                             </label>
                             <div className="form-group">
@@ -284,7 +269,7 @@ const UserEdit = (props) => {
                     </div>
                     <div className="row mt-4">
                         <div className="form-group mt-1 col-md-4 col-sm-12">
-                            <label for="PreviousJob">{t("Previous Job")}</label>
+                            <label htmlFor="PreviousJob">{t("Previous Job")}</label>
                             <input
                                 type="text"
                                 className="form-control mt-2"
@@ -300,7 +285,7 @@ const UserEdit = (props) => {
                             ) : null}
                         </div>
                         <div className="form-group mt-1 col-md-4 col-sm-12">
-                            <label for="PreviousJob">{t("Previous Position")}</label>
+                            <label htmlFor="PreviousJob">{t("Previous Position")}</label>
                             <input
                                 type="text"
                                 className="form-control mt-2"
@@ -313,7 +298,7 @@ const UserEdit = (props) => {
                         </div>
                         <div className="form-group mt-1 col-md-4 col-sm-12">
                             <div className="form-group">
-                                <label for="TotalWorkTime">{t("Total Experience")}</label>
+                                <label htmlFor="TotalWorkTime">{t("Total Experience")}</label>
                                 <input
                                     type="text"
                                     className="form-control mt-2"
@@ -329,7 +314,7 @@ const UserEdit = (props) => {
                     </div>
                     <div className="row mt-4">
                         <div className="form-group mt-1 col-md-12 col-sm-12">
-                            <label for="Skills">{t("Technical Skills")}</label>
+                            <label htmlFor="Skills">{t("Technical Skills")}</label>
                             <textarea
                                 className="form-control mt-2"
                                 id="Skills"
@@ -347,7 +332,7 @@ const UserEdit = (props) => {
                     </div>
                     <div className="row mt-4">
                         <div className="form-group mt-1 col-md-12 col-sm-12">
-                            <label for="Description">{t("About")}</label>
+                            <label htmlFor="Description">{t("About")}</label>
                             <textarea
                                 className="form-control mt-2"
                                 name="description"
@@ -362,15 +347,15 @@ const UserEdit = (props) => {
                             ) : null}
                         </div>
                     </div>
-                    <div style={{ textAlign: 'center' }} class="form-button mt-4">
+                    <div style={{ textAlign: 'center' }} className="form-button mt-4">
                         {!isLoading ? (
-                            <button id="submit" type="submit" class="btn btn-primary">
+                            <button id="submit" type="submit" className="btn btn-primary">
                                 {t("Update")}
                             </button>
                         ) : (
-                            <button id="submit" type="submit" class="btn btn-primary">
+                            <button id="submit" type="submit" className="btn btn-primary">
                                 <span
-                                    class="spinner-border spinner-border-sm"
+                                    className="spinner-border spinner-border-sm"
                                     role="status"
                                     aria-hidden="true"
                                 ></span>
