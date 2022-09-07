@@ -13,6 +13,7 @@ const UserCreate = () => {
     const [isLoading, setLoading] = useState(false)
     const FILE_SIZE = 1024 * 1024
     const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png']
+    const row = "3"
 
 
     const {t, i18n} = useTranslation()
@@ -338,7 +339,7 @@ const UserCreate = () => {
                                         </div>
                                     </div>
                                     <div className="row mt-4">
-                                        <div className="form-group mt-1 col-md-12 col-sm-12">
+                                        <div className="form-group mt-1 col-md-12 col-sm-12">                                            
                                             <label htmlFor="Skills">{t("Technical Skills")}</label>
                                             <textarea
                                                 className="form-control mt-2"
@@ -346,7 +347,7 @@ const UserCreate = () => {
                                                 name="skills"
                                                 placeholder={t(" ex: PHP, Vue.js, AWS..")}
                                                 onBlur={formik.handleBlur}
-                                                rows="3"
+                                                rows={row}
                                                 onChange={formik.handleChange}
                                                 value={formik.values.skills}
                                             />
@@ -365,7 +366,7 @@ const UserCreate = () => {
                                                 name="description"
                                                 onBlur={formik.handleBlur}
                                                 id="description"
-                                                rows="3"
+                                                rows={row}
                                                 onChange={formik.handleChange}
                                                 value={formik.values.description}
                                             />
