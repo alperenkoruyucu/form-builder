@@ -22,7 +22,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "src/components/LoginPage.js", "src/Pages/CreateAdmin.js", "src/components/UserTable.js", "src/methods/GetUsers.js", "src/methods/DynamicForms.js", "src/Pages/FormView.js", "src/Pages/FormTable.js", "src/Pages/FormCreate.js"  ],
+, "src/components/LoginPage.js", "src/Pages/CreateAdmin.js", "src/components/UserTable.js", "src/methods/GetUsers.js", "src/methods/DynamicForms.js", "src/Pages/FormView.js", "src/Pages/FormTable.js", "src/Pages/FormCreate.js", "src/Pages/FormCreate.jsx"  ],
   "exclude": [
     "node_modules"
   ]
